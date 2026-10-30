@@ -48,9 +48,9 @@ This project investigates **what drives accident severity across the United Stat
 
 ## Interactive Dashboard
 
-To explore the full interactive dashboard locally: open `US accident.twbx` in **Tableau Desktop** or the free [Tableau Reader](https://www.tableau.com/products/reader).
+🔗 **[View Interactive Dashboard on Tableau Public →](https://public.tableau.com/app/profile/aditya.jana5198/viz/us-traffic-accident-severity-analysis)**
 
-> 📌 **Tableau Public link will be added here after publishing.**
+To explore locally: open `US accident.twbx` in **Tableau Desktop** or the free [Tableau Reader](https://www.tableau.com/products/reader).
 
 ---
 
