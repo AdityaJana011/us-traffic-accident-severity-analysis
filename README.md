@@ -48,11 +48,9 @@ This project investigates **what drives accident severity across the United Stat
 
 ## Interactive Dashboard
 
-The full **Tableau interactive dashboard** is hosted on Tableau Public:
+To explore the full interactive dashboard locally: open `US accident.twbx` in **Tableau Desktop** or the free [Tableau Reader](https://www.tableau.com/products/reader).
 
-> 🔗 **[View Interactive Dashboard →](https://public.tableau.com)** *(upload link — replace after publishing `US accident.twbx` to Tableau Public)*
-
-To run locally: open `US accident.twbx` in **Tableau Desktop** or the free **Tableau Reader**.
+> 📌 **Tableau Public link will be added here after publishing.**
 
 ---
 
@@ -79,7 +77,6 @@ To run locally: open `US accident.twbx` in **Tableau Desktop** or the free **Tab
 │   ├── main.tex
 │   ├── sections/                  # Modular section files (14 sections)
 │   └── figures/                   # All visualization PNGs
-├── images/                        # Dashboard screenshots
 └── _archive/                      # Draft versions (not tracked by Git)
 ```
 
