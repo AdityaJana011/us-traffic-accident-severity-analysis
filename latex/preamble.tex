@@ -1,0 +1,152 @@
+% ============================================================
+%  preamble.tex  —  packages, page layout, custom commands
+% ============================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage[top=25mm, bottom=28mm, left=25mm, right=25mm, headheight=15pt]{geometry}
+
+% ── Colours ─────────────────────────────────────────────────
+\usepackage[dvipsnames]{xcolor}
+\definecolor{idvblue}{RGB}{31,78,121}
+\definecolor{idvmid}{RGB}{70,130,180}
+\definecolor{idvlight}{RGB}{222,235,247}
+\definecolor{insightbg}{RGB}{240,248,255}
+\definecolor{insightborder}{RGB}{100,160,210}
+
+% ── Section headings ────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{idvblue}}{\thesection}{1em}{}
+  [\vspace{2pt}\color{idvmid}\titlerule[1pt]\vspace{4pt}]
+\titleformat{\subsection}{\normalsize\bfseries\color{idvblue!80!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{idvblue!60!black}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+\titlespacing*{\subsection}{0pt}{12pt}{5pt}
+
+% ── Headers / footers ───────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\color{gray}DS612 -- IDV $|$ Group 7}
+\lhead{\small\color{gray}US Accidents Analysis (2016--2022)}
+\rfoot{\small\color{gray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Spacing ─────────────────────────────────────────────────
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ── Math ────────────────────────────────────────────────────
+\usepackage{amsmath,amssymb}
+
+% ── Tables ──────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{colortbl}
+\renewcommand{\arraystretch}{1.3}
+
+% ── Graphics ────────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\graphicspath{{figures/}}
+\captionsetup{font=small,labelfont={bf,color=idvblue},labelsep=period,skip=6pt}
+
+% ── Lists ───────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt}
+
+% ── Framed / shaded boxes ───────────────────────────────────
+\usepackage{mdframed}
+
+% ── Hyperlinks ──────────────────────────────────────────────
+\usepackage[colorlinks=true,linkcolor=idvblue,citecolor=idvblue,urlcolor=idvmid,
+            pdftitle={DS612 IDV Group 7},pdfauthor={Group 7}]{hyperref}
+\usepackage{bookmark}
+
+% ── Bibliography ────────────────────────────────────────────
+\usepackage[numbers,sort&compress]{natbib}
+
+% ============================================================
+%  CUSTOM COMMANDS
+%  NOTE: \verb|...| is NEVER used inside any command argument.
+%  Use \texttt{} with \textbackslash and \{ \} instead.
+% ============================================================
+
+% \todo{msg} — red pending flag. Search \todo{ in Overleaf.
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+
+% \todobox{msg} — safe inside table cells (no fragile commands)
+\newcommand{\todobox}[1]{\mbox{\textcolor{red}{\small\textbf{[\,#1\,]}}}}
+
+% \placeholder[height]{description}  —  grey box for missing figure
+% SAFE: no \verb anywhere — uses only \texttt with explicit escaping
+\newcommand{\placeholder}[2][7cm]{%
+  \begin{center}
+    \fcolorbox{gray!50}{gray!8}{%
+      \parbox[c][#1][c]{0.84\linewidth}{%
+        \centering\color{gray!70}\small\itshape #2%
+      }%
+    }%
+  \end{center}%
+}
+
+% \figchart[w]{file}{caption}{label}  —  drop-in once PNG exported
+\newcommand{\figchart}[4][0.93]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#1\linewidth]{#2}
+    \caption{#3}
+    \label{#4}
+  \end{figure}%
+}
+
+% \idiomtable{marks}{channels}{action}{scalability}
+\newcommand{\idiomtable}[4]{%
+  \begin{table}[H]
+  \centering\small
+  \begin{tabular}{@{}>{\bfseries\color{idvblue}}p{3.6cm}p{9.8cm}@{}}
+    \toprule
+    Marks           & #1 \\ \midrule
+    Channels        & #2 \\ \midrule
+    Action + Target & #3 \\ \midrule
+    Scalability     & #4 \\ \bottomrule
+  \end{tabular}
+  \caption{Analysis of idiom}
+  \end{table}%
+}
+
+% \verdict{label}{verdict}{explanation}
+\newcommand{\verdict}[3]{%
+  \begin{mdframed}[linecolor=idvblue,linewidth=1pt,backgroundcolor=idvlight,
+    innertopmargin=8pt,innerbottommargin=8pt,
+    innerleftmargin=10pt,innerrightmargin=10pt]
+  \noindent{\bfseries\color{idvblue}#1 Verdict:}~\textbf{#2}\\[4pt]#3
+  \end{mdframed}\vspace{6pt}%
+}
+
+% \insightbox{text}
+\newcommand{\insightbox}[1]{%
+  \begin{mdframed}[linecolor=insightborder,linewidth=0.8pt,
+    backgroundcolor=insightbg,
+    innertopmargin=7pt,innerbottommargin=7pt,
+    innerleftmargin=10pt,innerrightmargin=10pt]
+  \small\itshape #1
+  \end{mdframed}\vspace{4pt}%
+}
+
+% Row colour shorthands
+\newcommand{\posrow}{\rowcolor{green!12}}
+\newcommand{\negrow}{\rowcolor{red!10}}
+\newcommand{\midrow}{\rowcolor{yellow!15}}
+\newcommand{\hdrrow}{\rowcolor{idvlight}}

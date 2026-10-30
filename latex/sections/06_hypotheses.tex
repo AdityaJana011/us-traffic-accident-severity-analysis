@@ -1,0 +1,57 @@
+% sections/06_hypotheses.tex
+
+\section{Hypotheses}
+
+Two primary hypotheses were formulated based on the dataset context, plus two
+extended hypotheses that emerge from the severity definition.
+Each is framed through task abstraction to map the analytical goal onto
+appropriate visual idioms.
+
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\linewidth}{@{} c l X @{}}
+  \toprule
+  \textbf{ID} & \textbf{Type} & \textbf{Statement} \\ \midrule
+  H1 & Primary
+    & Bad weather conditions increase accident severity compared to
+      normal conditions. \\[4pt]
+  H2 & Primary
+    & Rush hours increase accident severity compared to other times
+      of day. \\[4pt]
+  H3 & Extended
+    & Road infrastructure with mandatory stopping controls (signals,
+      crossings, stop signs) reduces severity more substantially than
+      any single weather category increases it. \\[4pt]
+  H4 & Extended
+    & Accidents during low-traffic periods (night, early morning,
+      weekends) produce higher per-accident severity scores due to
+      higher vehicle speeds and longer emergency response times. \\
+  \bottomrule
+\end{tabularx}
+\caption{All hypotheses investigated in this report}
+\end{table}
+
+\subsection{H1 — Data and Task Abstraction}
+
+\textbf{Data Abstraction:}
+The dataset is a table where each row represents one accident.
+Key attributes: \texttt{Weather\_Group} (categorical, 7 values),
+\texttt{Severity\_Group} (binary: High/Low),
+\texttt{High\_Sev\_Rate} (quantitative ratio).
+
+\textbf{Task Abstraction:}
+Compare the proportion of high-severity accidents (Severity 3--4) across
+different weather groups.\\
+\textit{Problem breakdown:} Compare $\rightarrow$ Category $\rightarrow$ Proportion.
+
+\subsection{H2 — Data and Task Abstraction}
+
+\textbf{Data Abstraction:}
+Key attributes: \texttt{Hour} (ordinal, 0--23), \texttt{DayOfWeek} (categorical),
+\texttt{High\_Severity\_Ratio} (quantitative).
+
+\textbf{Task Abstraction:}
+Analyse whether the hourly distribution of accident severity peaks during rush
+hour windows (6--10 and 16--20).\\
+\textit{Problem breakdown:} Analyse $\rightarrow$ Temporal Trend $\rightarrow$
+Identify Pattern.

@@ -1,0 +1,25 @@
+% sections/01_abstract.tex
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This report presents a data-driven visual analysis of the US Accidents dataset
+(2016--2022), covering over 7.7 million accident records across 49 states.
+Using a hypothesis-driven, visualisation-centric methodology, we examine two
+primary hypotheses: (1) adverse weather conditions increase accident severity,
+and (2) rush hours increase accident severity.
+
+Critically, the dataset encodes severity as the \emph{impact on traffic flow}
+rather than physical injury severity—a distinction that fundamentally reshapes
+how insights must be interpreted.
+
+The dataset was pre-processed with a $2\times$IQR outlier removal strategy on
+\texttt{Duration} and \texttt{Distance(mi)}, and 2023 data was excluded
+due to partial-year temporal skew, yielding 6.1 million clean records across
+2016--2022.
+
+Through Python-based visualisations backed by statistical tests, we validate,
+challenge, and extend both hypotheses, and derive two new hypotheses that emerge
+naturally from the severity definition itself.
+
+% TODO: Update abstract summary sentence once all visualisations are finalised.

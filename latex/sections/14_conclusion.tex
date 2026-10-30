@@ -1,0 +1,55 @@
+% sections/14_conclusion.tex
+
+\section{Conclusion}
+
+This report used a hypothesis-driven, visualisation-centric approach to analyse
+the US Accidents dataset (2016--2022). The analysis spans geographic mapping,
+temporal trend analysis, exploratory distribution analysis (box plots),
+weather comparison, road feature investigation, and hourly severity
+decomposition --- all grounded in a cleaned, $2\times$IQR outlier-removed
+dataset that excludes the partial 2023 year.
+
+\begin{table}[H]
+\centering\small
+\begin{tabularx}{\linewidth}{@{}lll X@{}}
+  \toprule
+  \hdrrow \textbf{Hypothesis} & \textbf{Verdict} & \textbf{Key Numbers} & \textbf{Key Insight} \\ \midrule
+  H1: Bad weather
+    & Partially Supported
+    & Rain 24.38\%, Clear 17.85\%
+    & Rain--Clear gap widened to 6.53\,pp after cleaning; Fog/Haze still underperforms. \\[4pt]
+  H2: Rush hours
+    & Partially Supported
+    & 7--8\,am rate: 18.8--19\%; 3--6\,am plateau: 21.1--21.7\%
+    & Rush hours have highest absolute counts, not highest rates. \\[4pt]
+  H3: Infrastructure vs weather
+    & Supported
+    & Signal: $-11.7$\,pp; Rain vs Clear: $+6.53$\,pp
+    & Infrastructure effect is $\approx1.8\times$ the weather effect. \\[4pt]
+  H4: Low-traffic severity
+    & Supported
+    & Sat 7--9\,am peak $\approx$0.3176; visibility $>$10\,mi = 31.65\%
+    & Sustained 3--6\,am plateau confirms speed/response-time mechanism. \\
+  \bottomrule
+\end{tabularx}
+\caption{Summary of hypothesis verdicts and key insights (v3, post-cleaning)}
+\end{table}
+
+A critical finding across all hypotheses is that severity in this dataset
+measures \emph{traffic disruption duration}, not physical harm. This reframes
+the problem:
+
+\begin{itemize}[noitemsep]
+  \item \textbf{Infrastructure investment} (signals, crossings) is the most
+        powerful lever for reducing high-severity incidents --- more so than
+        weather-driven interventions.
+  \item \textbf{Rush hours} matter for absolute count management (more
+        resources, faster dispatch needed), but not for per-incident severity
+        reduction.
+  \item \textbf{Late-night and early morning hours} demand attention for
+        per-incident severity reduction --- speed reduction measures and improved
+        rural emergency response times are the targeted interventions.
+  \item \textbf{Outlier removal materially improved the analysis:} adverse
+        weather severity rates are higher, the early morning plateau is cleaner,
+        and the Snow/Ice signal is stronger in the cleaned dataset.
+\end{itemize}

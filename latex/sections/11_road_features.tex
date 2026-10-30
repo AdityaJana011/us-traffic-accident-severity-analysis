@@ -1,0 +1,44 @@
+% sections/11_road_features.tex — V7
+
+\section{V7: Severity in Presence of Road Features}
+
+Four small multiples compare the severity split (High/Low) for accidents at
+locations \emph{with} vs.\ \emph{without} Traffic Signals, Crossings,
+Junctions, and Stop Signs.
+
+% \figchart[0.95]{v7_road_features}{Road feature presence vs severity split}{fig:v7}
+\begin{figure}[H]
+  \centering
+  \placeholder[6cm]{%
+    \textbf{V7 --- Small Multiples: Road Feature vs Severity Split}\\[0.5em]
+    4 panels: Traffic Signal / Crossing / Junction / Stop Sign\\[0.4em]
+    Save as \texttt{figures/v7\_road\_features.png}%
+  }
+  \caption{High-severity rate in presence vs.\ absence of road features}
+  \label{fig:v7}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lccl@{}}
+  \toprule
+  \hdrrow
+  \textbf{Road Feature}
+    & \textbf{High Sev.\ (Present)}
+    & \textbf{High Sev.\ (Absent)}
+    & \textbf{Effect} \\ \midrule
+  \posrow Traffic Signal & 9.51\%  & 21.19\% & $+11.68$\% (increases) \\
+  \posrow Crossing       & 7.04\%  & 21.04\% & $+14.00$\% (increases) \\
+  \negrow Junction       & 26.79\% & 18.88\% & $-7.91$\% (reduces)\\
+  \posrow Stop Sign      & 6.22\%  & 19.84\% & $+13.62$\% (increases) \\
+  \bottomrule
+\end{tabular}
+\caption{Road feature presence vs.\ high-severity rate}
+\end{table}
+
+\insightbox{Infrastructure with mandatory stopping behaviour (signals, crossings,
+stop signs) substantially lowers high-severity rates, while junctions --- which
+require yield decisions without mandatory stops --- increase severity.
+Improving junction control (adding signals or roundabouts) at high-accident
+junctions could meaningfully reduce severity by improving traffic organisation
+and reducing road clearance time.}

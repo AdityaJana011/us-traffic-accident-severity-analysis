@@ -1,0 +1,83 @@
+% sections/13_statistical_validation.tex
+% Fill in from Python notebook output. Suggested code at bottom.
+
+\section{Statistical Validation}
+
+Statistical tests were conducted to support or challenge the visual patterns
+observed in H1 and H2. All tests were run in Python (\texttt{scipy.stats}) on
+the cleaned 451,829-row dataset (2016--2022, $2\times$IQR outlier removal).
+
+\begin{quote}
+  \itshape
+  \textbf{Note on statistical significance at scale:} With $n \approx 450$K,
+  even trivially small differences produce significant $p$-values. Effect size
+  measures (Cram\'{e}r's $V$, Cohen's $d$) are therefore reported alongside
+  $p$-values to assess \emph{practical} significance.
+\end{quote}
+
+\subsection{H1: Weather Group and Severity}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lp{3.8cm}ccp{4.2cm}@{}}
+  \toprule
+  \hdrrow \textbf{Test} & \textbf{Variables} & \textbf{Statistic} & \textbf{p-value} & \textbf{Interpretation} \\ \midrule
+  Chi-square
+    & \texttt{Weather\_Group}$\times$ \texttt{Severity\_Group}
+    & \texttt{112745.096}
+    & \texttt{0.0}
+    & \texttt{Cramer's V: 0.07809}\\[4pt]
+  Kruskal--Wallis
+    & \texttt{Severity}$\times$ \texttt{Weather\_Group}
+    & \texttt{86833.2745}
+    & \texttt{0.0}
+    & \texttt{interpretation} \\
+  \bottomrule
+\end{tabular}
+\caption{Statistical tests for H1}
+\end{table}
+
+\subsection{H2: Rush Hours and Severity}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lp{3.8cm}ccp{4.2cm}@{}}
+  \toprule
+  \hdrrow \textbf{Test} & \textbf{Variables} & \textbf{Statistic} & \textbf{p-value} & \textbf{Interpretation} \\ \midrule
+  Two-sample $t$-test
+    & Rush vs.\ Non-rush \texttt{Severity}
+    & \texttt{-28.7381}
+    & \texttt{1.31e-181}
+    & \texttt{Cohen's d: -0.0235} \\[4pt]
+  Kruskal--Wallis
+    & \texttt{Severity} across \texttt{Time\_Bucket}
+    & \texttt{161.021}
+    & \texttt{6.771e-37}
+    & \texttt{interpretation} \\
+  \bottomrule
+\end{tabular}
+\caption{Statistical tests for H2}
+\end{table}
+
+% Suggested Python code to run and fill in the tables above:
+%
+% from scipy.stats import chi2_contingency, kruskal, ttest_ind
+% import numpy as np
+%
+% # H1 Chi-square
+% ct = pd.crosstab(df['Weather_Group'], df['Severity_Group'])
+% chi2, p, dof, _ = chi2_contingency(ct)
+% V = np.sqrt(chi2 / (ct.values.sum() * (min(ct.shape)-1)))
+% print(f"H1 chi2={chi2:.2f}, p={p:.2e}, Cramer's V={V:.4f}")
+%
+% # H2 t-test
+% rush = df[df['Is_Rush_Hour']]['Severity']
+% non  = df[~df['Is_Rush_Hour']]['Severity']
+% t, p = ttest_ind(rush, non)
+% d    = (rush.mean() - non.mean()) / np.sqrt((rush.std()**2 + non.std()**2)/2)
+% print(f"H2 t={t:.2f}, p={p:.2e}, Cohen's d={d:.4f}")
+%
+% # H3 Chi-square (signal)
+% ct3 = pd.crosstab(df['Traffic_Signal'], df['Severity_Group'])
+% chi2_3, p3, _, _ = chi2_contingency(ct3)
+% print(f"H3 signal chi2={chi2_3:.2f}, p={p3:.2e}")

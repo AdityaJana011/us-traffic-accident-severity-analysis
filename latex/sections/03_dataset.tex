@@ -1,0 +1,70 @@
+% sections/03_dataset.tex
+
+\section{Dataset Overview}
+
+The dataset was sourced from Kaggle \cite{moosavi2019dataset} and is backed by
+peer-reviewed academic publications, lending it strong reliability.
+Data was collected in real-time from multiple traffic APIs, government agencies,
+cameras, and road sensors.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{} l l @{}}
+  \toprule
+  \textbf{Attribute}  & \textbf{Value} \\ \midrule
+  Total Records       & 7,728,394 \\
+  Features            & 46 original features \\
+  Full Time Range     & February 2016 – March 2023 \\
+  Analysis Range      & 2016 – 2022 (2023 excluded — partial year) \\
+  Coverage            & 49 US states \\
+  Licence             & CC BY-NC-SA 4.0 \\
+  Severity Scale      & 1 (minor impact) $\rightarrow$ 4 (major disruption) \\
+  \bottomrule
+\end{tabular}
+\caption{Dataset at a glance}
+\end{table}
+
+\subsection*{Critical Note on Severity Definition}
+
+\begin{quote}
+  \itshape
+  Severity in this dataset does \textbf{NOT} measure physical injury or
+  fatality. It measures the duration and extent of traffic flow disruption
+  caused by the accident. Severity~1 means a short delay; Severity~4 means
+  significant, prolonged road blockage.
+\end{quote}
+
+This distinction is crucial: high-severity accidents are those that tie up
+traffic for longer, correlating with accident complexity, road type, response
+time, and infrastructure---not necessarily injury severity.
+
+\subsection*{Reliability Justification}
+
+\begin{itemize}[noitemsep]
+  \item Supported by peer-reviewed publications in ACM SIGSPATIAL (2019)
+        \cite{moosavi2019risk}.
+  \item Multi-source data collection (traffic APIs, law enforcement, road
+        sensors) eliminates single-source bias.
+  \item Released under CC BY-NC-SA 4.0 with full provenance documentation.
+\end{itemize}
+
+\subsection*{Key Features Used}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{} l l p{7.5cm} @{}}
+  \toprule
+  \textbf{Feature}             & \textbf{Type}    & \textbf{Description} \\ \midrule
+  Severity                     & Ordinal (1--4)   & Traffic flow impact level \\
+  Start\_Time / End\_Time      & Datetime         & Accident start and clearance time \\
+  Weather\_Condition           & Categorical      & Raw weather text (grouped into 7 categories) \\
+  Sunrise\_Sunset              & Binary           & Day or night at time of accident \\
+  Junction / Signal / Crossing & Boolean          & Road infrastructure at accident location \\
+  Start\_Lat / Start\_Lng      & Continuous       & GPS coordinates for spatial mapping \\
+  State                        & Categorical      & US state of occurrence \\
+  Distance(mi)                 & Continuous       & Length of road extent affected \\
+  Duration\_Min                & Derived          & End\_Time $-$ Start\_Time in minutes \\
+  \bottomrule
+\end{tabular}
+\caption{Key features used in the analysis}
+\end{table}

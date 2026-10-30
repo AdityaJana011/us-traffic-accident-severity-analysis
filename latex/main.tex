@@ -1,0 +1,96 @@
+% ============================================================
+%  DS612 – Interactive Data Visualisation | Group 7
+%  main.tex — ROOT FILE  (compile THIS in Overleaf)
+%
+%  PROJECT LAYOUT
+%  ──────────────
+%  main.tex                  ← compile this
+%  preamble.tex              ← packages, page setup, custom commands
+%  references.bib            ← BibTeX entries
+%  sections/
+%    00_titlepage.tex
+%    01_abstract.tex
+%    02_introduction.tex
+%    03_dataset.tex
+%    04_fault_analysis.tex
+%    05_data_preparation.tex
+%    06_hypotheses.tex
+%    07_overview_viz.tex         V1–V4
+%    08_exploratory_boxplots.tex V_B1–V_B3  (new in v3)
+%    09_h1_weather.tex           V5a–V5d + H1 verdict
+%    10_h2_rush.tex              V6a–V6d + H2 verdict
+%    11_road_features.tex        V7
+%    12_extended_hypotheses.tex  H3, H4, limitations
+%    13_statistical_validation.tex
+%    14_conclusion.tex
+%  figures/   ← drop all exported chart PNGs here
+%  tables/    ← optional standalone reusable tables
+%
+%  COMPILE ORDER
+%  ─────────────
+%  pdfLaTeX → BibTeX → pdfLaTeX → pdfLaTeX
+% ============================================================
+
+\documentclass[12pt,a4paper,oneside]{article}
+\let\cleardoublepage\clearpage
+\input{preamble}
+\begin{document}
+
+\pagestyle{empty}   % ← disable header/footer temporarily
+\input{sections/00_titlepage}
+
+\clearpage
+\pagestyle{fancy}
+
+\begingroup
+\let\clearpage\relax
+\tableofcontents
+\endgroup
+\newpage
+
+\input{sections/01_abstract}
+\newpage
+
+\input{sections/02_introduction}
+\newpage
+
+\input{sections/03_dataset}
+\newpage
+
+\input{sections/04_fault_analysis}
+\newpage
+
+\input{sections/05_data_preparation}
+\newpage
+
+\input{sections/06_hypotheses}
+\newpage
+
+\input{sections/07_overview_viz}
+\newpage
+
+\input{sections/08_exploratory_boxplots}
+\newpage
+
+\input{sections/09_h1_weather}
+\newpage
+
+\input{sections/10_h2_rush}
+\newpage
+
+\input{sections/11_road_features}
+\newpage
+
+\input{sections/12_extended_hypotheses}
+\newpage
+
+\input{sections/13_statistical_validation}
+\newpage
+
+\input{sections/14_conclusion}
+\newpage
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

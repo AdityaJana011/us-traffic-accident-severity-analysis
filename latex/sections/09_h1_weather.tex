@@ -1,0 +1,135 @@
+% sections/09_h1_weather.tex — V5a-V5d + H1 verdict (v3 post-outlier numbers)
+
+\section{H1: Does Adverse Weather Increase Accident Severity?}
+
+Three complementary visualisations address this hypothesis. All figures reflect
+the cleaned dataset (2016--2022, $2\times$IQR outlier removal).
+
+%% ── V5a ─────────────────────────────────────────────────────
+\subsection{V5a: Weather Group vs \% of Accident Counts --- 100\% Stacked Bar}
+
+Each weather group is shown as a 100\% stacked bar, split between High (3--4)
+and Low (1--2) severity. This normalises for volume differences between weather
+categories, enabling direct proportion comparison.
+
+% \figchart{v5a_weather_stacked}{Weather group vs high-severity proportion}{fig:v5a}
+\begin{figure}[H]
+  \centering
+  \figchart{v5a_weather_stacked}{Weather group vs.\% of Accident Counts (100\% stacked bar)}{fig:v5a}
+  \label{fig:v5a}
+\end{figure}
+
+\idiomtable
+  {1D Bar (normalised stack)}
+  {Vertical Length (proportion) + Colour Hue (High = dark, Low = light)}
+  {Compare proportions across weather categories}
+  {7 weather groups --- optimal for grouped comparison}
+
+\insightbox{After outlier removal, Rain carries the highest high-severity
+proportion (24.38\%), followed by Cloudy (22.43\%) and Snow/Ice (21.45\%).
+Notably, Snow/Ice has moved much closer to Rain after cleaning, narrowing the
+gap from 3.3\,pp to just 2.9\,pp. Clear weather (17.85\%) still ranks above
+Fog/Haze (16.93\%) and Wind/Dust (13.77\%), reinforcing the severity-definition
+effect: fog accidents clear quickly despite perceived danger. The cleaner
+dataset strengthens the Rain--severity signal.}
+
+%% ── V5b ─────────────────────────────────────────────────────
+\subsection{V5b: Weather Group vs \% of Total Accidents --- Absolute Share}
+
+This stacked bar chart shows each weather group's absolute share of total
+accidents, split by severity.
+
+% \figchart{v5b_weather_absolute}{Absolute share of accidents by weather group}{fig:v5b}
+\begin{figure}[H]
+  \centering
+  \figchart{v5b_weather_absolute}{Absolute share of total accidents by weather group and severity}{fig:v5b}
+  \label{fig:v5b}
+\end{figure}
+
+\insightbox{While rain and adverse weather show higher severity \emph{rates},
+they represent a small fraction of total accidents (Rain: $\approx$8\%,
+Snow/Ice: $\approx$4\%). The overwhelming majority of high-severity accidents
+in absolute terms occur in Clear and Cloudy conditions, simply because these
+dominate overall volume.}
+
+\begin{quote}
+  \itshape
+  This duality --- higher rate in bad weather, higher absolute count in good
+  weather --- is crucial for policy interpretation.
+  \textbf{Charts V5a and V5b must always be read together, never independently.}
+\end{quote}
+
+%% ── V5c ─────────────────────────────────────────────────────
+\subsection{V5c: Weather Group vs High Severity Ratio \% --- Ranked Bar}
+
+A sorted horizontal bar chart ranks all 7 weather groups by their high-severity
+ratio with distinct colours per category.
+
+% \figchart{v5c_weather_ranked}{Weather groups ranked by high-severity ratio}{fig:v5c}
+\begin{figure}[H]
+  \centering
+ \figchart{v5c_weather_ranked}{Weather groups ranked by high-severity ratio}{fig:v5c}
+  \label{fig:v5c}
+\end{figure}
+
+\idiomtable
+  {1D Bar}
+  {Horizontal Length (ordered, aligned) + Colour Hue (categorical identity)}
+  {Rank and compare severity rate across weather types}
+  {7 categories --- direct visual ranking}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lcc@{}}
+  \toprule
+  \hdrrow \textbf{Weather Group} & \textbf{High Sev.\ Rate} & \textbf{Rank} \\ \midrule
+  \negrow Rain      & 24.38\% & 1 \\
+  \negrow Cloudy    & 22.43\% & 2 \\
+  \midrow Snow/Ice  & 21.45\% & 3 \\
+  \midrow Clear     & 17.85\% & 4 \\
+  \posrow Fog/Haze  & 16.93\% & 5 \\
+  \posrow Wind/Dust & 13.77\% & 6 \\
+  \posrow Other     & 11.38\% & 7 \\
+  \bottomrule
+\end{tabular}
+\caption{Weather group high-severity rates (post-$2\times$IQR removal, 2016--2022)}
+\end{table}
+
+%% ── V5d ─────────────────────────────────────────────────────
+\subsection{V5d: Visibility Bins vs High Severity \%}
+
+Accidents are binned by visibility into five ranges and compared by severity
+proportion.
+
+% \figchart{v5d_visibility}{Visibility bins vs high-severity proportion}{fig:v5d}
+\begin{figure}[H]
+  \centering
+  \figchart{v5d_visibility}{Visibility bins vs high-severity proportion}{fig:v5d}
+  \caption{Visibility bins vs.\ high-severity proportion}
+  \label{fig:v5d}
+\end{figure}
+
+\idiomtable
+  {1D Bar (normalised stack)}
+  {Vertical Length (proportion) + Colour Hue (High = dark, Low = light)}
+  {Compare proportions across visibility bins}
+  { Can accomodate dozons of keys and thousands of values for each key}
+  
+\insightbox{The relationship between visibility and severity is
+\emph{non-monotonic}. Very High visibility ($>10$\,mi) shows the
+\textbf{highest} high-severity rate at 31.65\%, while Very Low visibility
+($\leq1$\,mi) shows one of the lowest at 16.92\%. Clear, high-visibility roads
+(typically highways) produce accidents with longer traffic disruption, whereas
+fog accidents on local roads may clear faster. The visibility metric tracks road
+type as much as weather condition.}
+
+%% ── H1 Verdict ──────────────────────────────────────────────
+\verdict{H1}{Partially Supported}{%
+  Rain and Cloudy conditions show the highest severity rates (24.38\% and
+  22.43\% respectively after outlier removal). The Rain--Clear gap widened to
+  6.53\,pp, representing a stronger signal than pre-cleaning. Snow/Ice (21.45\%)
+  has also risen, suggesting the original dataset's extreme duration/distance
+  outliers were suppressing adverse-weather severity values. However, Fog/Haze
+  still underperforms expectations at 16.93\%, consistent with fog accidents
+  being localised and clearing quickly. Weather remains one factor among many.%
+}

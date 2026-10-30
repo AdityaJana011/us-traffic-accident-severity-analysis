@@ -1,0 +1,131 @@
+% sections/12_extended_hypotheses.tex — H3, H4, limitations (v3)
+
+\section{Extended Analysis: New Observations}
+
+The dataset's severity definition --- measuring traffic disruption rather than
+physical harm --- opens several additional hypotheses not captured by the
+original two.
+
+%% ── H3 ──────────────────────────────────────────────────────
+\subsection{O1: Infrastructure Controls Reduce Severity More Than Weather Does}
+
+\begin{quote}
+  \itshape
+  Road infrastructure with mandatory stopping controls (signals, crossings,
+  stop signs) reduces accident severity more substantially than any single
+  weather category increases it.
+\end{quote}
+
+\subsubsection*{Evidence from V7}
+
+Traffic signals reduce the high-severity rate from 21.19\% to 9.51\% --- a
+difference of \textbf{11.7\,pp}. By comparison, the worst weather category
+(Rain) raises the severity rate by only 6.53\,pp above Clear (24.38\%
+vs.\ 17.85\%) after outlier removal.
+
+\begin{equation*}
+  \Delta_{\text{infrastructure (signal)}} = 11.7\,\text{pp}
+  \qquad \gg \qquad
+  \Delta_{\text{weather (Rain vs Clear)}} = 6.53\,\text{pp}
+\end{equation*}
+
+Infrastructure intervention has roughly $\mathbf{1.8\times}$ the effect
+magnitude of the worst adverse weather on severity.
+
+\subsubsection*{Why This Matters}
+
+Since severity tracks traffic disruption duration, infrastructure that organises
+traffic (signals, crossings) ensures faster clearance, fewer secondary
+collisions, and quicker emergency access --- all reducing the severity score
+directly.
+
+\verdict{O1}{Supported}{%
+  The infrastructure effect size dominates the weather effect size even after
+  outlier removal tightened the weather signal. Signal installation ($-11.7$\,pp)
+  outperforms the strongest weather comparison ($+6.53$\,pp for Rain vs.\ Clear).
+  Crossing removal ($-14.0$\,pp) and stop sign removal ($-13.6$\,pp) show even
+  larger gaps.%
+}
+
+%% ── H4 ──────────────────────────────────────────────────────
+\subsection{O2: High-Speed, Low-Traffic Conditions Produce Disproportionately
+High Severity}
+
+\begin{quote}
+  \itshape
+  Accidents during low-traffic periods (night, early morning, weekends) produce
+  higher per-accident severity scores due to higher vehicle speeds and longer
+  emergency response times.
+\end{quote}
+
+\subsubsection*{Evidence from V6a and V6b}
+
+After outlier removal, the early morning plateau (hours 3--6) is cleaner and
+more clearly sustained:
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}cc@{}}
+  \toprule
+  \hdrrow \textbf{Hour} & \textbf{High-Severity Rate} \\ \midrule
+  3\,h & \todobox{add value} \\
+  4\,h & 21.05\% \\
+  5\,h & 21.49\% \\
+  6\,h & 21.73\% \\
+  \midrule
+  \midrow \textit{Rush 7--8\,am} & \textit{18.83--18.99\% (below average)} \\
+  \bottomrule
+\end{tabular}
+\caption{Early morning severity plateau (hours 3--6) vs.\ rush hours}
+\end{table}
+
+The Saturday 7--9\,am darkest cells on V6b (peak $\approx$0.3176) remain the
+single strongest temporal interaction, confirming the weekend-low-traffic effect.
+
+\subsubsection*{Evidence from V5d (Visibility Analysis)}
+
+Very High visibility ($>10$\,mi) accidents show a 31.65\% high-severity
+rate --- higher than any other visibility bin. High visibility correlates with
+rural highways and open roads where speeds are elevated, reinforcing the
+speed-severity link.
+
+\subsubsection*{Corroboration from V\_B2}
+
+Oregon's wide IQR in V\_B2 reflects genuine longer clearance times on rural
+highways where emergency response is slower --- exactly the mechanism proposed
+by H4. The severity score in this dataset is fundamentally a \emph{clearance
+time} score, and clearance time is longest when speed is high and responders
+are far away.
+
+\verdict{O2}{Supported}{%
+  Low-traffic, high-speed conditions are the primary driver of high per-accident
+  severity. The signal is stronger and cleaner after $2\times$IQR removal: the
+  early morning plateau (hours 3--6) is sustained, and the Saturday 7--9\,am
+  heatmap peak is the single strongest interaction across all temporal views.%
+}
+
+%% ── Limitations ─────────────────────────────────────────────
+\subsection{Limitations and Paths for Deeper Analysis}
+
+\begin{itemize}[noitemsep]
+  \item \textbf{Speed Data Integration:} The dataset lacks posted speed limits.
+        Merging with NHTSA speed data by road segment would directly test H4.
+
+  \item \textbf{Multivariate Severity Modelling:} A logistic regression or
+        decision tree on \texttt{Weather\_Group}, \texttt{Road\_Feature},
+        \texttt{Hour}, and \texttt{Is\_Weekend} simultaneously would reveal
+        interaction effects invisible in single-variable charts.
+
+  \item \textbf{Duration as Dependent Variable:} Using \texttt{Duration\_Min}
+        rather than \texttt{Severity\_Group} as the outcome leverages the
+        continuous signal for finer-grained analysis.
+
+  \item \textbf{State-Level Heterogeneity:} California contributes 23\% of
+        records. State-stratified analysis would reveal whether H1 and H2 hold
+        uniformly or are driven by California's climate and road network.
+
+  \item \textbf{COVID Counterfactual:} 2020--2021 saw 30--60\% lower traffic
+        volume with maintained infrastructure. Comparing pre/post COVID severity
+        rates isolates volume effects from infrastructure effects.
+
+\end{itemize}

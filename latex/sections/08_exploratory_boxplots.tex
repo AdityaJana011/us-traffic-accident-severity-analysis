@@ -1,0 +1,107 @@
+% sections/08_exploratory_boxplots.tex — V_B1, V_B2, V_B3  [NEW in v3]
+
+\section{Exploratory Distribution Analysis (Box Plots)}
+
+Prior to hypothesis testing, three 5-point summary box plots were generated to
+understand the distributional properties of key quantitative variables and
+validate the $2\times$IQR outlier removal strategy. These charts informed data
+cleaning decisions and reveal structural characteristics that qualify all
+downstream analysis.
+
+%% ── V_B1 ─────────────────────────────────────────────────────
+\subsection{V\_B1: Accident Distance Distribution by State}
+
+A side-by-side box plot displays the distribution of \texttt{Distance(mi)} ---
+the road length affected by the accident --- categorized by all 49 states.
+Grey box plots show post-cleaning values; blue dotted whisker extensions show
+pre-cleaning outliers, making the effect of $2\times$IQR removal explicit.
+
+% TO ADD FIGURE: save as figures/vb1_distance_by_state.png
+% \figchart[0.98]{vb1_distance_by_state}{Accident distance by state pre- and post-cleaning}{fig:vb1}
+\begin{figure}[H]
+  \centering
+  \figchart[0.98]{vb1_distance_by_state}{Accident distance distribution by state post $2\times$IQR cleaning}{fig:vb1}
+  \caption{}
+  \label{fig:vb1}
+\end{figure}
+
+\idiomtable
+  {1D Line (box: Q1, median, Q3) + 0D Points (whiskers, outliers)}
+  {Vertical Length (ordered, aligned)}
+  {Analyse distribution spread; compare outlier removal effect across states}
+  {49 states --- manageable for a side-by-side layout with small font labels}
+
+\insightbox{Most states show a median accident distance of 0.5--1.5 miles (the
+IQR box), confirming the dataset predominantly captures localised road blockages.
+Georgia (GA) is the most notable outlier with max whisker $\approx$7\,mi;
+Montana (MT) and Wyoming (WY) show wide IQR spreads reflecting sparse rural
+highway networks where accidents affect longer road stretches. Wyoming's
+pre-clean maximum approaches 8.5 miles --- physically implausible for a single
+accident. The $2\times$IQR cleaning effectively separates sensor errors from
+genuine high-distance incidents, directly justifying the outlier removal step.}
+
+%% ── V_B2 ─────────────────────────────────────────────────────
+\subsection{V\_B2: Accident Duration Distribution by State}
+
+A side-by-side box plot shows the distribution of \texttt{Duration}
+(time from accident start to traffic clearance) per state. This is the most
+direct continuous proxy for the severity score --- longer duration implies a
+higher severity classification.
+
+% TO ADD FIGURE: save as figures/vb2_duration_by_state.png
+% \figchart[0.98]{vb2_duration_by_state}{Accident duration by state pre- and post-cleaning}{fig:vb2}
+\begin{figure}[H]
+  \centering
+    \figchart[0.98]{vb2_duration_by_state}{Accident duration distribution by state post-$2\times$IQR cleaning}{fig:vb2}
+  \label{fig:vb2}
+\end{figure}
+
+\idiomtable
+  {1D Line (box) + 0D Points (whiskers)}
+  {Vertical Length (ordered, aligned)}
+  {Analyse distributional spread; validate outlier removal on Duration}
+  {49 states --- same layout as V\_B1 for direct comparison}
+
+\insightbox{The typical accident resolves in 75--120 minutes (median per state),
+with an IQR of $\approx$55--170 minutes. This is the continuous signal underlying
+the ordinal Severity score --- Severity~4 records occupy the upper tail.
+Maine's pre-clean maximum of $\approx$950 minutes ($\approx$16 hours) is almost
+certainly a timestamp entry error: a 16-hour road closure would be a major media
+event. Oregon's wide IQR may reflect genuine longer clearance times on rural
+highways where emergency response is slower --- exactly the mechanism supporting H4.
+The $2\times$IQR cleaning removed the most extreme implausible values while
+retaining genuine long-duration incidents. Crucially, the consistent cross-state
+box shape (similar Q1--Q3 widths) confirms the dataset is structurally sound
+after cleaning.}
+
+%% ── V_B3 ─────────────────────────────────────────────────────
+\subsection{V\_B3: Accident Count Distribution by Year (2016--2022)}
+
+A box plot with overlaid state-level dots shows the per-state accident count
+distribution for each year 2016--2022 over weeks. The COVID year 2020 is highlighted in
+yellow. This chart simultaneously validates dataset growth (Fault~7), exposes
+geographic inequality (Fault~2), and contextualises the COVID anomaly.
+
+% TO ADD FIGURE: save as figures/vb3_count_by_year.png
+% \figchart{vb3_count_by_year}{Per-state accident count by year with COVID highlight}{fig:vb3}
+\begin{figure}[H]
+  \centering
+  \figchart{vb3_count_by_year}{Per-state accident count distribution by year (2016--2022) over weeks}{fig:vb3}
+  \label{fig:vb3}
+\end{figure}
+
+\idiomtable
+  {1D Line (box) + 0D Points (state-level dots)}
+  {Vertical Length (ordered, aligned) + Colour Hue (yellow = COVID 2020)}
+  {Identify trend in dataset growth; expose geographic inequality}
+  {7 years $\times$ 52 week dots --- moderate density, overplotting managed by jitter}
+
+\insightbox{Three simultaneous findings emerge. First, the median per-state
+accident count grows steadily from $\approx$8K (2016) to $\approx$26K (2022),
+confirming the dataset expansion noted in Fault~7 --- more states being covered
+each year, not just more accidents. Second, the box grows taller each year (wider
+IQR), revealing increasing geographic inequality: some states (CA, FL, TX) grow
+much faster, widening the distribution.
+Excluding 2023 is clearly
+justified: a partial-year box cannot be meaningfully compared to these full
+annual distributions.}

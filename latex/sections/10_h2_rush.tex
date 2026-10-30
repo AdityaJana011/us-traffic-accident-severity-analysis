@@ -1,0 +1,100 @@
+% sections/10_h2_rush.tex — V6a-V6d + H2 verdict (v3 plateau)
+
+\section{H2: Do Rush Hours Increase Accident Severity?}
+
+%% ── V6a ─────────────────────────────────────────────────────
+\subsection{V6a: Accident Severity Rate Across Hours of the Day}
+
+A line chart plots the high-severity ratio for each hour (0--23) against a
+dashed average reference line. Data labels on each point provide precise values.
+
+% \figchart{v6a_hourly_rate}{High-severity rate by hour of day}{fig:v6a}
+\begin{figure}[H]
+  \centering
+  \placeholder[6cm]{\textbf{V6a --- Hourly Severity Rate Line Chart}\\[0.4em]
+    With average reference line and data labels\\[0.3em]
+    Save as \texttt{figures/v6a\_hourly\_rate.png}}
+  \caption{High-severity rate by hour of day (0--23) with average reference line}
+  \label{fig:v6a}
+\end{figure}
+
+\idiomtable
+  {0D Point + 1D Line (connected)}
+  {Position on Y-axis + X-axis hour (ordinal)}
+  {Discover trend; identify peaks above average line}
+  {24 hourly values --- ideal for connected scatter/line}
+
+\insightbox{After outlier removal, a \textbf{sustained early morning plateau}
+emerges (hours 4--6): 4\,h: 21.05\%, 5\,h: 21.49\%, 6\,h: 21.73\%. Rather than
+a single 4\,am spike, there is a consistent window of elevated severity
+corresponding to pre-dawn, low-volume, high-speed conditions. Secondary peaks
+occur at 9\,am (20.82\%) and 19--21\,h (21.24--21.51\%). The classic rush hours
+of 7--8\,am show rates of 18.83--18.99\%, which are \textbf{below} the daily
+average --- directly challenging H2.}
+
+%% ── V6b ─────────────────────────────────────────────────────
+\subsection{V6b: Severity Ratio: Hour $\times$ Day of Week (Heatmap)}
+
+A square-mark heatmap cross-tabs Hour (x-axis) against Day of Week (y-axis),
+with colour saturation encoding the high-severity ratio.
+
+% \figchart{v6b_heatmap_hourdow}{Hour x Day-of-Week severity ratio heatmap}{fig:v6b}
+\begin{figure}[H]
+  \centering
+  \placeholder[6cm]{\textbf{V6b --- Heatmap: Hour $\times$ Day of Week}\\[0.4em]
+    Save as \texttt{figures/v6b\_heatmap\_hourdow.png}}
+  \caption{High-severity ratio heatmap --- Hour (x-axis) $\times$ Day of Week (y-axis)}
+  \label{fig:v6b}
+\end{figure}
+
+\idiomtable
+  {0D Symbols (squares)}
+  {Colour saturation (sequential, ordered) + Position (both axes ordered)}
+  {Identify interaction pattern between two temporal dimensions}
+  {$7 \times 24 = 168$ cells --- within perceptual limits for heatmaps}
+
+\insightbox{Saturday and Sunday 7--9\,am remains the single strongest interaction (heatmap
+peak $\approx$0.3176 after cleaning), confirming the weekend-low-traffic effect.
+The signal is now cleaner: the weekend morning cluster is more clearly distinct
+from surrounding weekday cells. Weekday rush-hour cells (7--9\,am, Mon--Fri) are
+notably lighter than the weekend and early-morning cells, reinforcing that the
+rate peak is not a rush-hour phenomenon.}
+
+%% ── V6c ─────────────────────────────────────────────────────
+\subsection{V6c: Hourly Accident Volume by Severity Group (Stacked Bar)}
+
+Each hour shows total accident share split between High (3--4) and Low (1--2)
+severity, separating accident volume from severity rate.
+
+% \figchart{v6c_hourly_volume}{Hourly accident volume by severity group}{fig:v6c}
+\begin{figure}[H]
+  \centering
+  \placeholder[5cm]{\textbf{V6c --- Stacked Bar: Hourly Volume by Severity Group}\\[0.4em]
+    Save as \texttt{figures/v6c\_hourly\_volume.png}}
+  \caption{Hourly accident volume split by severity group}
+  \label{fig:v6c}
+\end{figure}
+
+\idiomtable
+  {1D Bar (stacked)}
+  {Vertical Length + Colour Hue (High = dark, Low = light)}
+  {Compare accident volume of severities across hours of the day}
+  {Can accomodate dozons of keys and thousands of values for that key}
+  
+\insightbox{Rush hours (7--8\,am, 16--17\,h) produce the highest absolute
+accident volumes (7.5\% of daily total each), and their high-severity absolute
+share is also the largest (1.43\%, 1.46\% respectively). However, as a
+proportion \emph{within} each hour, the rush hours are not outliers. The volume
+surge means that even a moderate severity rate produces a large absolute count
+of high-severity incidents --- a critical public safety consideration.}
+
+
+%% ── H2 Verdict ──────────────────────────────────────────────
+\verdict{H2}{Partially Supported}{%
+  Rush hours produce the highest \emph{absolute count} of high-severity accidents
+  due to volume, but the highest \emph{rate} occurs during the sustained early
+  morning plateau (hours 3--6: 21.05--21.73\%) and at 19--21\,h.
+  For infrastructure and emergency response planning, volume-adjusted metrics
+  support H2. For severity rate analysis, the hypothesis is challenged.
+  Both lenses are necessary for a complete picture.%
+}

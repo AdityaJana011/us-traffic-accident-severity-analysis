@@ -1,0 +1,39 @@
+% sections/02_introduction.tex
+
+\section{Introduction}
+
+Road accidents represent a persistent public safety and urban planning challenge.
+Understanding what drives accident severity---and specifically what causes
+accidents to have prolonged traffic impact---enables smarter infrastructure
+design, better emergency response, and more effective policy.
+The US Accidents dataset, compiled by Moosavi et al.\ \cite{moosavi2019dataset},
+provides one of the most comprehensive real-world accident records available for
+such analysis.
+
+To frame our investigation, we follow the \textbf{CPQH} structure---Context,
+Problem, Questions, Hypothesis---a method that grounds our visual storytelling in
+facts, real issues, and investigative questions before forming claims.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\linewidth}{@{} l X @{}}
+  \toprule
+  \textbf{CPQH Stage} & \textbf{Our Application} \\ \midrule
+  Context
+    & US road accidents 2016--2022 across 49 states; severity scored 1--4
+      based on traffic disruption duration. \\[4pt]
+  Problem
+    & Traffic severity is not random. Environmental and temporal factors may
+      systematically increase accident-induced traffic disruption. \\[4pt]
+  Questions
+    & Does adverse weather prolong accident-induced disruption?
+      Do rush hours amplify severity?
+      Does road infrastructure moderate severity? \\[4pt]
+  Hypotheses
+    & H1: Bad weather increases accident severity.
+      H2: Rush hours increase accident severity.
+      H3 \& H4: Extended hypotheses derived from the severity definition. \\
+  \bottomrule
+\end{tabularx}
+\caption{CPQH framework applied to this project}
+\end{table}

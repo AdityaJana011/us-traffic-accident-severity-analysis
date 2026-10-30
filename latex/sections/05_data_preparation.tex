@@ -1,0 +1,115 @@
+% sections/05_data_preparation.tex
+
+\section{Data Preparation}
+
+Raw data was processed in Python (Pandas) through a multi-stage pipeline.
+After cleaning, $2\times$IQR outlier removal on \texttt{Duration} and
+\texttt{Distance(mi)}, and exclusion of 2023 data (only 3 months of records,
+creating temporal skew), the dataset yields \textbf{ 6,162,346 usable
+rows across 2016--2022}.
+
+\subsection{Preprocessing Pipeline}
+\begin{table}[!htbp]
+\centering\small
+\begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{3cm} >{\raggedright\arraybackslash}p{4cm} X @{}}
+  \toprule
+  \textbf{Stage} & \textbf{Action} & \textbf{Rationale} \\ \midrule
+
+  Column Selection
+    & 21 of 46 features retained
+    & Focus on accident context, weather, temporal, and spatial signals \\
+
+  Missing Values
+    & Median fill for numerics; 'Unknown' for categoricals; drop on critical fields
+    & Preserve data volume while removing unreliable records \\
+
+  Datetime Parsing
+    & \texttt{Start\_Time} and \texttt{End\_Time} parsed to datetime
+    & Enables temporal feature extraction \\
+
+  Year Filter
+    & 2023 excluded
+    & Only 3 months of 2023 records; partial year creates temporal skew \\
+
+  Outlier Removal
+    & $2\times$IQR on \texttt{Duration\_Min} and \texttt{Distance(mi)}; Temperature: $-30$--$130^\circ$F; Lat/Lng within CONUS bounds
+    & Remove sensor errors and implausible values (e.g.\ 16-hour road closure, 8.5-mile single-accident road blockage) \\
+
+  Deduplication
+    & Unique on accident ID
+    & Prevent double-counting from multi-source collection \\
+
+  \bottomrule
+\end{tabularx}
+\caption{Preprocessing pipeline summary}
+\end{table}
+\clearpage
+
+\vspace{-10pt}
+
+\subsection{Engineered Features}
+\begin{table}[!htbp]
+\centering\small
+\begin{tabularx}{\linewidth}{@{} l X @{}}
+  \toprule
+  \textbf{Feature} & \textbf{Definition} \\ \midrule
+
+  \texttt{Severity\_Group}
+    & High (3--4) vs.\ Low (1--2) binary grouping \\
+
+  \texttt{Weather\_Group}
+    & 7 categories: Clear, Cloudy, Rain, Snow/Ice,
+      Fog/Haze, Wind/Dust, Other \\
+
+  \texttt{Road\_Feature}
+    & Junction / Signal / Crossing / Open Road (priority-ordered) \\
+
+  \texttt{Duration}
+    & End\_Time $-$ Start\_Time in minutes; clipped 0--1440, then
+      $2\times$IQR outlier removal \\
+
+  \texttt{Accident\_Count}
+    & Flag that aggregates over categories to give accident count \\
+
+  \texttt{High\_Severity\_Ratio}
+    & Ratio of High severity accidents over total accidents (considered High Severity as 1 and Low Severity as 0) \\
+
+  \bottomrule
+\end{tabularx}
+\caption{Engineered features and their definitions}
+\end{table}
+\vspace{-10pt}
+\subsection{Weather Grouping Logic}
+
+The raw \texttt{Weather\_Condition} field contains hundreds of distinct string
+values. These were mapped to 7 groups using keyword matching:
+\begin{table}[!htbp]
+\centering\small
+\begin{tabular}{@{} l p{9cm} @{}}
+  \toprule
+  \textbf{Group}  & \textbf{Keywords matched (case-insensitive)} \\ \midrule
+  Snow/Ice   & snow, sleet, ice, blizzard, wintry \\
+  Fog/Haze   & fog, mist, haze, smoke, smog \\
+  Rain       & rain, drizzle, shower, thunder, storm \\
+  Cloudy     & cloud, overcast, partly \\
+  Clear      & fair, clear, sunny \\
+  Wind/Dust  & wind, dust, sand \\
+  Other      & anything not matched above \\
+  \bottomrule
+\end{tabular}
+\caption{Keyword-based weather grouping rules}
+\end{table}
+\vspace{-10pt}
+\subsection{Rationale for Outlier Removal ($2\times$IQR)}
+
+The $2\times$IQR method was chosen over standard $1.5\times$IQR to retain
+genuine long-duration incidents while removing sensor errors and timestamp
+mistakes. The distribution plots (V\_B1, V\_B2) directly validate this choice:
+\begin{itemize}[noitemsep]
+  \item Wyoming pre-clean maximum distance: \textasciitilde8.5 miles (physically
+        implausible for a single accident).
+  \item Maine pre-clean maximum duration: \textasciitilde950 minutes (\textasciitilde16 hours),
+        almost certainly a timestamp entry error.
+  \item Post-cleaning, the cross-state box shapes are consistent, confirming
+        structural soundness of the cleaned dataset.
+\end{itemize}

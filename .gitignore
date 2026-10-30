@@ -1,0 +1,36 @@
+# Large data files - download from Kaggle instead
+*.csv
+data/
+
+# Tableau packaged workbooks (too large for GitHub - host on Tableau Public)
+*.twbx
+
+# Tableau temp/recovery files
+*.twbr
+
+# Archive folder - kept locally, not pushed to GitHub
+_archive/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+.env
+venv/
+.venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk

@@ -1,0 +1,112 @@
+% sections/07_overview_viz.tex — V1, V2, V3, V4
+
+\section{Overview Visualisations}
+
+%% ── V1 ──────────────────────────────────────────────────────
+\subsection{V1: Geographic Distribution of High-Severity Accidents}
+
+The dot map plots each accident by GPS coordinates, with Severity~3 in blue and
+Severity~4 in red. Low-severity accidents (1--2) are excluded to highlight the
+spatial concentration of disruptive incidents.
+
+% TO ADD FIGURE: save chart as figures/v1_geo_map.png then replace the
+% placeholder block below with:
+ % \figchart{v1_geo_map}{Geographic distribution of high-severity accidents}{fig:v1_geo_map.png}
+\begin{figure}[H]
+  \centering
+   \figchart{v1_geo_map}{Geographic distribution of high-severity accidents (Severity 3--4)}{fig:v1_geo_map.png}
+  \label{fig:v1}
+\end{figure}
+
+\idiomtable
+  {0D Point}
+  {Position (ordered, unaligned) + Colour Hue (blue = Sev.\,3, red = Sev.\,4)}
+  {Identify spatial pattern in accident severity distribution}
+  {500K points; overplotting managed by point size and opacity}
+
+\insightbox{Severity 4 accidents (red) cluster densely along the Eastern Seaboard
+and major interstate corridors, particularly in Florida, California, and the Texas
+triangle. The western interior shows predominantly Severity~3 (blue) in sparse
+highway networks. The geographic skew mirrors population density and road network
+complexity rather than environmental conditions alone.}
+
+%% ── V2 ──────────────────────────────────────────────────────
+\subsection{V2: Top 25 States by Total Accident Count (2016--2022)}
+
+A ranked horizontal bar chart showing California leading with approximately
+1.39M accidents, more than double Florida (687K) and three times Texas (454K).
+The sorted order enables immediate rank lookup and magnitude comparison.
+
+% TO ADD FIGURE: save as figures/v2_top25_states.png
+% \figchart{v2_top25_states}{Top 25 states by total accident count}{fig:v2}
+\begin{figure}[H]
+  \centering
+  \figchart{v2_top25_states}{Top 25 states by total accident count}{fig:v2}
+  \label{fig:v2}
+\end{figure}
+
+\idiomtable
+  {1D Line (bar)}
+  {Horizontal Length (ordered, aligned)}
+  {Lookup rank and compare magnitude across states}
+  {Dozens of categories, thousands of values per bar}
+
+\insightbox{California's dominance is partly a data-collection artefact --- the
+dataset relies on traffic API feeds, and California has one of the most
+comprehensive sensor networks in the US.}
+
+%% ── V3 ──────────────────────────────────────────────────────
+\subsection{V3: Overall Severity Distribution}
+
+A simple bar chart reveals the sharp skew: Severity~2 dominates with 4.85M
+records, while Severity~1 (65K), Severity~3 (1.15M), and Severity~4 (103K) are
+comparatively small. This distribution is critical for interpreting all
+downstream High Severity Rate calculations.
+
+% TO ADD FIGURE: save as figures/v3_severity_dist.png
+% \figchart{v3_severity_dist}{Overall severity distribution}{fig:v3}
+\begin{figure}[H]
+  \centering
+  \figchart{v3_severity_dist}{Overall severity distribution across the full dataset}{fig:v3}
+  \label{fig:v3}
+\end{figure}
+
+\idiomtable
+  {1D Bar}
+  {Vertical Position + Colour Hue (categorical identity)}
+  {Compare counts across ordinal severity categories}
+  {4 categories --- optimal for grouped bars}
+
+\insightbox{Over 80\% of accidents are Severity~2. This class imbalance means
+High Severity Ratio (proportion of Severity 3--4) is a more meaningful signal
+than raw counts throughout this report. A shift from 19\% to 22\% high severity
+represents a substantial change in absolute terms given the volume.}
+
+%% ── V4 ──────────────────────────────────────────────────────
+\subsection{V4: Year-wise Accident Volume and High Severity Rate}
+
+A dual-axis combo chart pairs stacked bars (High vs.\ Low severity counts) with
+a dashed line for the average yearly severity rate. The COVID-19 period
+(2020--2021) is highlighted in pink.
+
+% TO ADD FIGURE: save as figures/v4_yearly_trend.png
+% \figchart{v4_yearly_trend}{Year-wise volume and high-severity rate}{fig:v4}
+\begin{figure}[H]
+  \centering
+  \figchart{v4_yearly_trend}{Year-wise accident volume (stacked bars) and high-severity rate (dashed line)}{fig:v4}
+  \label{fig:v4}
+\end{figure}
+
+\idiomtable
+  {1D Bar (stacked) + 0D Point}
+  {Vertical Length + Colour Hue (stacked) + Position on secondary Y-axis (rate)}
+  {Compare trend over time; identify COVID anomaly}
+  {7 years (2016--2022) --- manageable temporal resolution}
+
+\insightbox{High severity rate declined sharply from 34\% in 2016 to under 3\%
+by 2022. This counter-intuitive long-term trend likely reflects the rapid growth
+in Severity~2 records as API coverage expanded year-on-year, diluting the
+high-severity proportion --- not a genuine improvement in accident outcomes.
+The COVID dip in 2020 shows reduced accident volume but the rate continued its
+structural decline. Inter-year severity rate comparisons should be treated as
+exploratory, not conclusive.}

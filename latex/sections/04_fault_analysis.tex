@@ -1,0 +1,87 @@
+% sections/04_fault_analysis.tex
+
+\section{Data Quality and Fault Analysis}
+
+The underlying dataset introduces structural biases and limitations that
+constrain the conclusions that can responsibly be drawn.
+These faults were identified through exploratory visualisation and must be
+considered when interpreting every chart in this report.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{} c p{4.8cm} p{7.5cm} @{}}
+  \toprule
+  \textbf{\#} & \textbf{Fault} & \textbf{Primary Impact} \\ \midrule
+  1  & Severity Label Imbalance        & Severity 2 $\approx$80\%; misleading raw severity ratios \\
+  2  & Geographic Sampling Bias        & CA over-represented; invalid cross-state comparison \\
+  3  & Road Network Bias               & Rural areas appear artificially safer \\
+  4  & Confounding Variables (Weather) & Weather–severity link is correlational, not causal \\
+  5  & Exposure Bias (Time-based)      & No normalisation by vehicles on road per hour \\
+  6  & Temporal Data Drift             & Year-on-year trends may reflect data artefacts \\
+  7 & Missing Exposure Data           & All severity ratios are accident-conditional \\
+  8 & Lack of Contextual Features     & No road type, speed limit, or traffic density \\
+  \bottomrule
+\end{tabular}
+\caption{Summary of identified data faults}
+\end{table}
+
+\subsection{Fault 1: Severity Label Imbalance}
+Severity~2 dominates (\textasciitilde80--85\% of total data).
+Severity~3 and~4 are significantly underrepresented; Severity~1 is extremely
+rare. High-severity patterns become statistically weak due to low sample sizes.
+
+\textit{Impact:} All High Severity Rate percentages must be read in the context
+of their underlying counts. A small percentage-point shift can be substantial
+in absolute terms.
+
+\subsection{Fault 2: Geographic Sampling Bias}
+California has disproportionately high accident counts relative to its
+population share. Other large states (TX, FL) are significantly lower than
+expected. Coverage is dependent on reporting and sensor infrastructure, not
+actual accident rates.
+
+\textit{Impact:} Direct state-level comparisons are partially reflections of
+data collection coverage rather than true accident rates.
+
+\subsection{Fault 4: Confounding Variables in Weather Analysis}
+Weather does not occur in isolation. The analysis lacks simultaneous control for
+traffic density, vehicle speed, road type, and time of day.
+
+\textit{Impact:} Causal interpretations of H1 (weather $\rightarrow$ severity)
+must be treated as correlational only.
+
+\subsection{Fault 5: Exposure Bias in Time-Based Analysis}
+No normalisation by number of vehicles on the road at each hour is applied.
+A 21\% severity rate at 4\,am with 1,000 accidents represents a fundamentally
+different risk level from 19\% at 8\,am with 50,000 accidents.
+
+\textit{Impact:} Rush-hour severity comparisons (H2) are misleading without
+exposure normalisation. All time-based conclusions are accident-conditional.
+
+\subsection{Fault 6: Temporal Data Drift}
+Accident counts increase year-on-year; the high-severity rate simultaneously
+declines sharply. This decline likely reflects expansion of API coverage
+(more Severity~2 records added), not genuine improvements in accident outcomes.
+
+\textit{Impact:} Year-over-year severity rate comparisons must be treated as
+exploratory. The 2023 partial year was excluded for this reason.
+
+\subsection{Fault 7: Missing Exposure Data (Critical)}
+The dataset contains no information on traffic volume, vehicle miles travelled,
+or number of active drivers. True risk per unit of exposure cannot be computed.
+
+\textit{Impact:} The most fundamental limitation for both H1 and H2. All
+severity ratios are \emph{accident-conditional}, not \emph{trip-conditional}.
+
+% TODO: Expand remaining fault subsections (3, 6, 8, 9, 11, 12) if required.
+
+\begin{quote}
+  \itshape
+  While all visualisations accurately represent the data as collected, the
+  dataset introduces multiple biases and structural limitations. Any conclusions
+  drawn---including the validation of H1 and H2---must be qualified by these
+  faults. The analysis demonstrates patterns and associations, not causal
+  mechanisms. Deeper investigation using matched datasets (traffic volume, speed
+  records, injury severity) would be required to move from correlation to
+  causation.
+\end{quote}
